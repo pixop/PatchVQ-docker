@@ -13,6 +13,7 @@ RUN pip install fastai==2.0.18 cached-property loguru pillow==8.2 Cython seaborn
 RUN wget https://github.com/baidut/PatchVQ/releases/download/v0.1/RoIPoolModel-fit.10.bs.120.pth
 RUN wget https://github.com/baidut/PatchVQ/releases/download/v0.1/fastai-r3d18_K_200ep.pth
 RUN wget https://github.com/baidut/PatchVQ/releases/download/v0.1/release.zip \
-    && unzip release.zip
+    && unzip release.zip \
+    && rm release.zip
 
 RUN python -c 'import torchvision; torchvision.models.resnet18(pretrained=True)'
