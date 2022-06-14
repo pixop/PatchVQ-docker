@@ -1,8 +1,7 @@
-#import click
-from fastiqa.vqa import *
-#from fastiqa.models.mobilenet.v2 import mobilenet3d_v2
-#from torchvision.models import *
+import os.path, sys
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
+from fastiqa.vqa import *
 from fastiqa.log import *
 from torchvision.models.video.resnet import *
 from tqdm import tqdm
@@ -45,8 +44,8 @@ roi_col = None
 name = 'paq2piq'
 
 dls = SingleVideo2MOS.from_dict({
-    "__name__": "Bitmovin",
-    "dir": "data/Bitmovin/", # change the location accordingly
+    "__name__": "inference",
+    "dir": "data/inference/", # change the location accordingly
     "csv_labels": "labels.csv",
     "fn_col": "name",
     "label_col": "mos"
@@ -67,9 +66,3 @@ learn.dls.set_vid_id(vid_list[0])
 e = IqaExp('exp_features', gpu=0, seed=None)
 e[name] = learn
 e.run(lambda x: [get_features(x, name, bs=bs, vid_id=vid_id) for vid_id in tqdm(vid_list)])
-
-feats = load_feature(vid='B03', feat='paq2piq', path='data/Bitmovin/features')
-print(feats.shape)
-
-feats = load_feature(vid='B02', feat='paq2piq', path='data/Bitmovin/features')
-print(feats.shape)

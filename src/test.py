@@ -1,3 +1,6 @@
+import os.path, sys
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
+
 from fastiqa.vqa import *
 
 # modify the json files to point to your database locations
@@ -21,7 +24,6 @@ class PVQ(InceptionTimeModel):
             # download extracted features or extract by your own
             feats = FeatureBlock('paq2piq_pooled', roi_index=None, clip_num=None, clip_size=None), \
             FeatureBlock('r3d_18_pooled', roi_index=None, clip_num=None, clip_size=None)
-            print(feats)
             dls = Feat2MOS.from_dict(dls, bs=bs, feats=feats)
 
         if not isinstance(dls.label_col, (list, tuple)): # database contains no patch labels
@@ -39,12 +41,7 @@ e.fit_one_cycle(n_epoch)
 e.load()
 
 # cross database validation
-#print(All(LIVE_VQC_tiny))
-print(type(All(LIVE_VQC_tiny)))
 print(e.valid([All(LIVE_VQC_tiny)], cache=False))
-#print(e.get_np_preds())
-
-#print(All(LIVE_VQC_tiny))
 
 # combine filenames and scores for LIVE_VQC predictions
 df1 = pd.read_csv('release/data/LIVE_VQC/labels.csv')

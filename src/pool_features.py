@@ -1,9 +1,6 @@
-#import multiprocessing
-from joblib import Parallel, delayed
-from tqdm import tqdm
-import contextlib
-import joblib.parallel
-from functools import partial
+import os.path, sys
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
+
 import math
 from pathlib import Path
 import torch.nn as nn
@@ -84,31 +81,18 @@ class FeatPooler():
         logger.debug(f'done:   {pooled_feats.shape} ')
         return pooled_feats
 
-
-#import multiprocessing
-#from joblib import Parallel, delayed
-
 def pool_features(database, name, input_suffix="", output_suffix="_pooled", pool_size=16):
   pooler = FeatPooler.from_dict(database, name=name, input_suffix=input_suffix, output_suffix=output_suffix, pool_size=pool_size)
 
   vids = pooler.df.index.tolist()
-  #num_cores = multiprocessing.cpu_count()
   vids_todo = [vid for vid in vids if not (pooler.path/'features'/(pooler.output_feat + '/' + str(vid) + '.npy')).exists()]
 
-  desc = f'{name}({input_suffix} --> {output_suffix})'
-
-  #with tqdm(desc=desc, total=len(vids_todo)) as progress_bar:
-  #[pooler(vid) for vid in vids_todo]
   for vid in vids_todo:
     pooler(vid)
 
-  # parallel:
-  # with tqdm_joblib(tqdm(desc=desc, total=len(vids_todo))) as progress_bar:
-  #     Parallel(n_jobs=num_cores)(delayed(pooler)(vid) for vid in vids_todo)
-
 database = {
-    "__name__": "Bitmovin",
-    "dir": "data/Bitmovin/",
+    "__name__": "inference",
+    "dir": "data/inference/",
     "csv_labels": "labels.csv",
     "fn_col": "name",
     "label_col": "mos"
