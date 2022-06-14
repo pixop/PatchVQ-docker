@@ -1,9 +1,10 @@
 #!/bin/bash
+
+# re-create data working directory
 rm -fR data/inference
+mkdir -p data/inference
 
-mkdir data/inference
-
-# lossless transcoding of the input file
+# wrap the input file in a QuickTime container
 echo
 echo "======================="
 echo "==== PREPROCESSING ===="
@@ -12,15 +13,17 @@ echo
 
 echo "$2"
 
-ffmpeg $3 -i $1 $2 -c:v ffv1 -an -y data/inference/test.mov
+ffmpeg $3 -i $1 $2 -c:v copy -an -y data/inference/test.mov
 
 # probe number of frames
 NO_FRAMES=$(ffprobe -v error -select_streams v:0 -count_frames -show_entries stream=nb_read_frames -print_format default=nokey=1:noprint_wrappers=1 data/inference/test.mov)
 LAST_IMAGE=$(printf "test/image_%05d" $NO_FRAMES)
 
+# create fake labels.csv file
 echo "name,mos,is_valid,frame_number,fn_last_frame" > data/inference/labels.csv
 echo "test,0,False,$NO_FRAMES,$LAST_IMAGE" >> data/inference/labels.csv
 
+# extract JPEGs
 script/extract_mp4.sh data/inference/test.mov
 
 # extract and pool features
