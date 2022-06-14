@@ -1,13 +1,17 @@
 import os.path, sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
+import logging
+
 import math
 from pathlib import Path
 import torch.nn as nn
 import pandas as pd
-from loguru import logger
 import numpy as np
 import torch
+
+logging.basicConfig()
+logging.getLogger().setLevel(logging.ERROR)
 
 def takespread_idx(N, num, clip_size=16):
     length = float(N-clip_size)
@@ -51,18 +55,11 @@ class FeatPooler():
         return cls(d, **kwargs)
 
     def prepare_feat(self, vid):
-        logger.info(f'pooling : {vid}')
-        df = self.df
-        _feats = load_feature(vid, self.input_feat, self.path/'features')
-        if _feats.dim() == 4:
-            _feats = _feats.unsqueeze(dim=1)
+        feats = load_feature(vid, self.input_feat, self.path/'features')
 
-        feats = _feats.refine_names('N', 'roi', 'C', 'H', 'W')
-        feats = feats.flatten(['C', 'H', 'W'], 'features')
-        #feats = feats.flatten(start, 'features')
-        feats = feats.align_to('roi', 'features', 'N') # N C L
+        feats = feats.flatten(start_dim=2, end_dim=4)
+        feats = feats.permute(1, 2, 0) # .align_to('roi', 'features', 'N') # N C L
 
-        logger.debug(f'preparing:   {_feats.shape} to {feats.shape}')
         return feats
 
     def __call__(self, vid): # pool_feat
@@ -70,15 +67,13 @@ class FeatPooler():
         n_frames = feats.shape[-1]
         pooled_feat_list = [] # 16 clips, indexes
         for start, end in takespread_idx(n_frames, self.clip_num):  #n_chunks_idx(n_frames, self.clip_num):
-            feat = feats[ :,  :, start:end].rename(None)
+            feat = feats[ :,  :, start:end]
             pooled_feat = self.m(feat) # [1, features, frame_num] --> [1, features, clip_num]
             pooled_feat_list.append(pooled_feat.permute(0,2,1)) # --> [1, clip_num, features]
 
         # clip_num x -1  x  features
         pooled_feats = torch.cat(pooled_feat_list, dim=0).view(-1, pooled_feat_list[0].shape[-1])
-        logger.debug(f'%cat {pooled_feat_list[0].shape} with length {len(pooled_feat_list)} to {pooled_feats.shape}')
         save_feature(pooled_feats, vid, self.output_feat, self.path/'features')  # --> [1, clip_num, features]
-        logger.debug(f'done:   {pooled_feats.shape} ')
         return pooled_feats
 
 def pool_features(database, name, input_suffix="", output_suffix="_pooled", pool_size=16):

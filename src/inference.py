@@ -1,9 +1,14 @@
 import os.path, sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
+import logging
+
 import warnings
 
 from fastiqa.vqa import *
+
+logging.basicConfig()
+logging.getLogger().setLevel(logging.ERROR)
 
 # modify the json files to point to your database locations
 LSVQ  = load_json('json/LSVQ.json')

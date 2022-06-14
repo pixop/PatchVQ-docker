@@ -1,10 +1,15 @@
 import os.path, sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
+import logging
+
 from fastiqa.vqa import *
 from fastiqa.log import *
 from torchvision.models.video.resnet import *
 from tqdm import tqdm
+
+logging.basicConfig()
+logging.getLogger().setLevel(logging.ERROR)
 
 def get_features(x, name, bs, vid_id):
     try:
