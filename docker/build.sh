@@ -1,3 +1,2 @@
 #!/bin/bash
-docker build -t patchvq:latest .
-
+docker build --no-cache -t pixop/patchvq:latest .
