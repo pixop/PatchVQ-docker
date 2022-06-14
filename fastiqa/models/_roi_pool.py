@@ -249,7 +249,7 @@ class RoIPoolModel(NoRoIPoolModel):
                     rois_data = rois_data.view(-1, 4)
             else: # no information provided
                 # x1, y1, x2, y2: 0, 0, width, height
-                t = tensor([0, 0, im_data.size(-1), im_data.size(-2)]).cuda()
+                t = tensor([0, 0, im_data.size(-1), im_data.size(-2)], device=im_data.device)
                 rois_data = t.unsqueeze(0).repeat(batch_size, 1, 1).view(-1, 4)
 
             # bboxes: torch.Size([16, n_output, 4])
