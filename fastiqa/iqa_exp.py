@@ -71,8 +71,10 @@ class IqaExp(dict):
 
         n_gpu = torch.cuda.device_count() if torch.cuda.is_available() else 0
         if type(gpu) is int:
-            assert gpu < n_gpu
-            torch.cuda.set_device(gpu)
+            if gpu < n_gpu:
+                torch.cuda.set_device(gpu)
+            else:
+                gpu = None
 
         self.gpu = gpu
         self.seed = seed
