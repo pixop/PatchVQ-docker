@@ -227,6 +227,15 @@ class IqaExp(dict):
         # pd.options.display.float_format = '{:,.3f}'.format
         return pd.DataFrame(d, index=list(self.keys()))
 
+    def mos_inference(self, on=None, cache=True, **kwargs):
+        def infer_one(l):
+            df = l.mos_inference(on, cache=cache, **kwargs)
+            return df[df.columns].apply(lambda row: ','.join(row.map('{:.3f}'.format)))
+
+        d = [infer_one(learn) for learn in self.values()]
+
+        return pd.DataFrame(d, index=list(self.keys()))
+
     def show_current_best(self, keys=None):
         # show current best performance
 

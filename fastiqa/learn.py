@@ -158,6 +158,7 @@ class IqaLearner(Learner):
         suffixes = ['', '_p1', '_p2', '_p3']
 
         csv_file = self.path / ('valid@' + on.__name__ + suffixes[metric_idx] + '.csv')
+
         if os.path.isfile(csv_file) and cache:
             print(f'load cache {csv_file}')
             df = pd.read_csv(csv_file)
@@ -257,9 +258,24 @@ class IqaLearner(Learner):
         records = [valid_one(data) for data in on]
         return pd.DataFrame(records, index=[data.__name__ for data in on]) # abbr
 
+    def mos_inference(self, on=None, cache=True, **kwargs):
+        def infer_one(data):
+            # logging.debug(f'validating... {self.model.__name__}@{data.__name__}')
+            output, _ = self.get_np_preds(on=data, cache=cache, **kwargs)  # TODO note here only output 1 scores
+            return {'mos': output[0]}
 
+        # avoid changing self.data
+        if on is None:
+            on = self.dls
 
+        if not isinstance(on,  (list, tuple)  ):
+            on = [on]
 
+        on = [self.dls.bunch(x, **kwargs) if isinstance(x, (str,dict)) else x for x in on]
+
+        records = [infer_one(data) for data in on]
+
+        return pd.DataFrame(records, index=[data.__name__ for data in on]) # abbr
 
 
  # TestLearner(dls, model, metrics=[SRCC(), LCC()])
