@@ -14,3 +14,5 @@ RUN wget https://github.com/baidut/PatchVQ/releases/download/v0.1/RoIPoolModel-f
 RUN wget https://github.com/baidut/PatchVQ/releases/download/v0.1/fastai-r3d18_K_200ep.pth
 RUN wget https://github.com/baidut/PatchVQ/releases/download/v0.1/release.zip \
     && unzip release.zip
+
+RUN python -c 'import torchvision; torchvision.models.resnet18(pretrained=True)'
