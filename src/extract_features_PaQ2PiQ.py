@@ -12,7 +12,6 @@ def get_features(x, name, bs, vid_id):
         x.dls.set_vid_id(vid_id)
         x.extract_features(name=name, skip_exist=True)
     except RuntimeError:
-        print('WTF')
         tmp_bs = bs
         while tmp_bs > 1:
             tmp_bs //= 2
@@ -36,7 +35,7 @@ def save_feature(x, vid, feat, path):
     with open(npy_file, 'wb') as f:
         np.save(f, x)
 
-bs = 128 
+bs = 4
 clip_num = None
 clip_size = 1
 roi_col = None

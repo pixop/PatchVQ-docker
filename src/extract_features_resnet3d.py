@@ -35,7 +35,7 @@ def save_feature(x, vid, feat, path):
     with open(npy_file, 'wb') as f:
         np.save(f, x)
 
-bs = 8 
+bs = 1
 clip_num = 40
 clip_size = 8
 roi_col = None
