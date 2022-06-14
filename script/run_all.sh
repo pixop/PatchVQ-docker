@@ -4,16 +4,19 @@
 rm -fR data/inference
 mkdir -p data/inference
 
-# wrap the input file in a QuickTime container
+# transcode the input file to a new QuickTime container with minimal visual loss
 echo
 echo "======================="
 echo "==== PREPROCESSING ===="
 echo "======================="
 echo
 
-echo "$2"
+echo "Input file: $1"
+echo "Output args: $2"
+echo "Input args: $3"
+echo
 
-ffmpeg -hide_banner -loglevel error $3 -i $1 $2 -c:v copy -an -y data/inference/test.mov
+ffmpeg -hide_banner -loglevel error $3 -i "$1" $2 -crf 12 -an -y data/inference/test.mov
 
 # probe number of frames
 NO_FRAMES=$(ffprobe -v error -select_streams v:0 -count_frames -show_entries stream=nb_read_frames -print_format default=nokey=1:noprint_wrappers=1 data/inference/test.mov)
