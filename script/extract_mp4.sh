@@ -1,5 +1,5 @@
 #!/bin/bash
-OUT_DIR="data/Bitmovin/jpg"
+OUT_DIR="data/inference/jpg"
 DB_DIR=$(dirname -- "$1")
 filename=$(basename -- "$1")
 NAME="${filename%%.*}"
