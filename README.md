@@ -2,9 +2,7 @@
 Docker inference support for using Patch-VQ (‘Patching Up’ the Video Quality Problem) to compute mean opinion score (MOS) on your
 own video files. A build of this container has been pushed to Docker Hub already (https://hub.docker.com/r/pixop/patchvq/) for your convenience.
 
-Forked from: https://github.com/baidut/PatchVQ 
-
-***Please email yingzhenqiang at gmail dot com for any questions about PatchVQ***
+The original project can be found at: https://github.com/baidut/PatchVQ
 
 ## Run CUDA accelerated inference on your own video file
 
@@ -32,4 +30,5 @@ Note: It is possible to supply any number of arguments to FFmpeg this way.
 
 1. The implementation is not production quality by any means and is merely designed to be a least effort way to compute the MOS. No error checking of any kind is performed!
 2. The original implementation was tweaked a bit to output PNGs instead of JPEGs to prevent the MOS drop due to lossy encoding. Saving JPEGs at the highest quality still produces noticeable degradation.
-3. Tested on 64-bit Linux.
+3. The container has only tested on 64-bit Linux.
+4. Please contact the PatchVQ authors for any questions about the method invoices and their pretrained model.
