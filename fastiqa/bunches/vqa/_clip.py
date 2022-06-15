@@ -49,7 +49,7 @@ class Clip(fastuple):
         base = a[0]
         end_frame = int(a[1].rsplit('.', 1)[0]) # .jpg
 
-        fns = [f'{base}_{n+1:05d}'+'.jpg' for n in range(end_frame-clip_size, end_frame)]
+        fns = [f'{base}_{n+1:05d}'+'.png' for n in range(end_frame-clip_size, end_frame)]
         return cls(tuple(PILImage.create(f) for f in fns))
 
     def show(self, **kwargs):
@@ -84,7 +84,7 @@ class MultiClip(fastuple):
         else:
             fns = []
             for idx in takespread(range(n_frames), clip_num, clip_size):
-                fns += [f'{base}_{n+1:05d}'+'.jpg' for n in idx]
+                fns += [f'{base}_{n+1:05d}'+'.png' for n in idx]
         return cls(tuple(PILImage.create(f) for f in fns))
 
     @property

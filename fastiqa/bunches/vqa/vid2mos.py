@@ -21,7 +21,7 @@ dls.show_batch()
 from . import *
 
 """
-Note here, a video means a collection of jpg files
+Note here, a video means a collection of png files
 """
 
 def clip2image(t, vertical=False):
@@ -37,7 +37,7 @@ class Vid2MOS(IqaDataBunch):
     clip_num = 8
     bs = 8
     fn_last_frame_col = "fn_last_frame"
-    folder = "jpg"
+    folder = "png"
     frame_num_col = 'frame_number'
 
     def get_df(self):
@@ -49,7 +49,7 @@ class Vid2MOS(IqaDataBunch):
             for folder in df[self.fn_col].tolist():
                 n_max = 0
                 # .split('.')[0]
-                for file in (self.path/self.folder/folder).glob('*.jpg'):
+                for file in (self.path/self.folder/folder).glob('*.png'):
                     n = int(str(file)[:-4].split('_')[-1])
                     if n > n_max:
                         n_max = n;

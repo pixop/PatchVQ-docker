@@ -140,12 +140,12 @@ class SingleVideo2MOS(Vid2MOS):
 
                 # for 2d case, we need .jpg
                 # for 3d case, we don't need .jpg
-                files = [f'image_{x+self.clip_size:05d}.jpg' for x in range(0, num_frame-self.clip_size+1, self.clip_size)] # drop last clip
+                files = [f'image_{x+self.clip_size:05d}.png' for x in range(0, num_frame-self.clip_size+1, self.clip_size)] # drop last clip
             else:
                 # fixed clip_num cases ( we used before)
                 # index start with 1, not 0
                 last_frame_index = np.linspace(self.clip_size, row[self.frame_num_col], self.clip_num).astype(int).tolist()
-                files = [f'image_{x:05d}.jpg' for x in last_frame_index ]
+                files = [f'image_{x:05d}.png' for x in last_frame_index ]
 
                 # use a different 3d backbone? smaller but faster?
                 # change to use pytorch built in r3d 18
