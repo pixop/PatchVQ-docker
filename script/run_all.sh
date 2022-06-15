@@ -36,9 +36,9 @@ echo "==== FEATURE EXTRACTION ===="
 echo "============================"
 echo
 
-python src/extract_features_PaQ2PiQ.py
-python src/extract_features_resnet3d.py
-python src/pool_features.py
+python3 src/extract_features_PaQ2PiQ.py
+python3 src/extract_features_resnet3d.py
+python3 src/pool_features.py
 
 # insert duplicate record to avoid errors relating to SRCC/LCC requiring at least two records
 echo "test,0,False,$NO_FRAMES,$LAST_IMAGE" >> data/inference/labels.csv
@@ -50,4 +50,4 @@ echo "==== MOS INFERENCE ===="
 echo "======================="
 echo
 
-python src/inference.py
+python3 src/inference.py
