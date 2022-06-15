@@ -22,7 +22,7 @@ Compute MOS on `video.mp4` located in the current directory:
 
 Warning: This is going to be very slow compared to GPU inference for most people.
 
-### Run inference a cropped, 8 seconds clip of your own video file
+### Run inference on a 1280x720 crop out of the first 8 seconds only
 
 Compute MOS on `video.mp4` located in the current directory while using FFmpeg pre-processing to crop and stop processing at 8 seconds:
 
