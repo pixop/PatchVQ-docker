@@ -12,11 +12,13 @@ Computing MOS on `video.mp4` located in the current directory:
 
 Note: Requires Nvidia Container Toolkit to be installed (https://github.com/NVIDIA/nvidia-docker).
 
-## Run CPU inference on your own video file (warning: slow!)
+## Run CPU inference on your own video file
 
 Computing MOS on `video.mp4` located in the current directory:
 
 ```docker run -it --ipc=host --rm -v $(pwd):/mnt/host pixop/patchvq:latest /mnt/host/video.mp4```
+
+Warning: This is going to be very slow compared to GPU inference for most people.
 
 ## Run inference a cropped, 8 seconds clip of your own video file
 
