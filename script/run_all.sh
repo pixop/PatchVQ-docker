@@ -4,7 +4,7 @@
 rm -fR data/inference
 mkdir -p data/inference
 
-# transcode the input file to a new QuickTime container with minimal visual loss
+# transcode the input file losslessly to a new QuickTime container
 echo
 echo "======================="
 echo "==== PREPROCESSING ===="
