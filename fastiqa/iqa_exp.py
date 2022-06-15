@@ -72,8 +72,10 @@ class IqaExp(dict):
         n_gpu = torch.cuda.device_count() if torch.cuda.is_available() else 0
         if type(gpu) is int:
             if gpu < n_gpu:
+                print('Using CUDA device:', gpu)
                 torch.cuda.set_device(gpu)
             else:
+                print('Using CPU')
                 gpu = None
 
         self.gpu = gpu
