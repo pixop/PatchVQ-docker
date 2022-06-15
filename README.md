@@ -35,4 +35,4 @@ Note: It is possible to supply any number of arguments to FFmpeg this way.
 1. The implementation is not production quality by any means and is merely designed to be a quick, minimal effort way to compute the MOS. No error checking of any kind is performed!
 2. The original implementation was tweaked a bit to output PNGs instead of JPEGs to prevent the MOS drop due to lossy encoding. Saving JPEGs at the highest quality still produces noticeable degradation.
 3. The container has only tested on 64-bit Linux.
-4. Please contact the PatchVQ authors for any questions about the method invoices and their pretrained model.
+4. Please contact the PatchVQ authors for any questions about the core methodology and their pretrained model.
