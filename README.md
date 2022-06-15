@@ -4,7 +4,9 @@ own video files. A build of this container has been pushed to Docker Hub already
 
 The original project can be found at: https://github.com/baidut/PatchVQ
 
-## Run CUDA accelerated inference on your own video file
+## Examples
+
+### Run CUDA accelerated inference on your own video file
 
 Compute MOS on `video.mp4` located in the current directory:
 
@@ -12,7 +14,7 @@ Compute MOS on `video.mp4` located in the current directory:
 
 Note: Requires Nvidia Container Toolkit to be installed (https://github.com/NVIDIA/nvidia-docker).
 
-## Run CPU inference on your own video file
+### Run CPU inference on your own video file
 
 Compute MOS on `video.mp4` located in the current directory:
 
@@ -20,7 +22,7 @@ Compute MOS on `video.mp4` located in the current directory:
 
 Warning: This is going to be very slow compared to GPU inference for most people.
 
-## Run inference a cropped, 8 seconds clip of your own video file
+### Run inference a cropped, 8 seconds clip of your own video file
 
 Compute MOS on `video.mp4` located in the current directory while using FFmpeg pre-processing to crop and stop processing at 8 seconds:
 
