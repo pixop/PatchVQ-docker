@@ -19,3 +19,6 @@ RUN wget https://github.com/baidut/PatchVQ/releases/download/v0.1/release.zip \
     && rm release.zip
 
 RUN python3 -c 'import torchvision; torchvision.models.resnet18(pretrained=True)'
+
+ENTRYPOINT ["script/run_all.sh"]
+
