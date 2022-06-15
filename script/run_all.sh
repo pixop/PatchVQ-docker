@@ -26,8 +26,8 @@ LAST_IMAGE=$(printf "test/image_%05d" $NO_FRAMES)
 echo "name,mos,is_valid,frame_number,fn_last_frame" > data/inference/labels.csv
 echo "test,0,False,$NO_FRAMES,$LAST_IMAGE" >> data/inference/labels.csv
 
-# extract JPEGs
-script/extract_mp4.sh data/inference/test.mov
+# extract PNGs
+script/extract_mov.sh data/inference/test.mov
 
 # extract and pool features
 echo
